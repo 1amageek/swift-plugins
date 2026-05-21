@@ -56,8 +56,16 @@ struct PluginTests {
         try PluginWriter().write(plugin, to: destination)
         try PluginMaterializer().materializeCompatibilityFiles(for: plugin, provider: .claude, at: destination)
 
-        #expect(FileManager.default.fileExists(atPath: destination.appending(path: ".mcp.json").path(percentEncoded: false)))
-        #expect(FileManager.default.fileExists(atPath: destination.appending(path: ".claude-plugin/plugin.json").path(percentEncoded: false)))
+        let mcpURL = destination.appending(path: ".mcp.json")
+        let manifestURL = destination.appending(path: ".claude-plugin/plugin.json")
+        #expect(FileManager.default.fileExists(atPath: mcpURL.path(percentEncoded: false)))
+        #expect(FileManager.default.fileExists(atPath: manifestURL.path(percentEncoded: false)))
+
+        let manifestData = try Data(contentsOf: manifestURL)
+        let manifest = try JSONSerialization.jsonObject(with: manifestData) as? [String: Any]
+        #expect(manifest?["name"] as? String == "aurora")
+        #expect(manifest?["mcpServers"] as? String == "./.mcp.json")
+        #expect(manifest?["schemaVersion"] == nil)
     }
 
     @Test

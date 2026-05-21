@@ -21,7 +21,7 @@ public struct PluginMaterializer: Sendable {
     }
 
     private func materializeClaudeFiles(for plugin: Plugin, at packageURL: URL) throws {
-        try writeJSON(plugin.manifest, to: PluginParser.legacyManifestURL(in: packageURL))
+        try writeJSON(ClaudePluginManifest(plugin: plugin), to: PluginParser.legacyManifestURL(in: packageURL))
         if let mcpConfiguration = plugin.mcpConfiguration {
             try writeJSON(mcpConfiguration, to: PluginParser.legacyMCPConfigurationURL(in: packageURL))
         }
@@ -35,5 +35,19 @@ public struct PluginMaterializer: Sendable {
         } catch {
             throw PluginWriterError.fileWriteFailed(url, error.localizedDescription)
         }
+    }
+}
+
+private struct ClaudePluginManifest: Encodable {
+    var name: String
+    var description: String?
+    var version: String?
+    var mcpServers: String?
+
+    init(plugin: Plugin) {
+        name = plugin.manifest.name
+        description = plugin.manifest.description
+        version = plugin.manifest.version
+        mcpServers = plugin.mcpConfiguration == nil ? nil : "./.mcp.json"
     }
 }
