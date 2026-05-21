@@ -1,0 +1,24 @@
+{
+  "originHash" : "914fc8c2ffd85a7a0b1810ba571871743159908ff3446ec27be73e57969261ff",
+  "pins" : [
+    {
+      "identity" : "swift-skills",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1amageek/swift-skills.git",
+      "state" : {
+        "revision" : "61c4bda16cb04d7e7fa54623c19297833c720bda",
+        "version" : "0.2.1"
+      }
+    },
+    {
+      "identity" : "swift-yaml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1amageek/swift-yaml.git",
+      "state" : {
+        "revision" : "8a33d36bca390d9518d5f7e483cbbaa011da5f76",
+        "version" : "1.0.1"
+      }
+    }
+  ],
+  "version" : 3
+}
